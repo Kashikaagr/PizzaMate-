@@ -3,105 +3,159 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PizzaMate Chatbot</title>
+<title>PizzaMate</title>
 
 <style>
-    /* Reset */
-    * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-        font-family: Arial, sans-serif;
-    }
+/* RESET */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
 
-    /* Background */
-    body {
-        height: 100vh;
-        background: linear-gradient(135deg, #ff9a9e, #fad0c4);
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
+/* BACKGROUND ANIMATION */
+body {
+    height: 100vh;
+    background: linear-gradient(-45deg, #ff4b2b, #ff416c, #ff9a9e, #fad0c4);
+    background-size: 400% 400%;
+    animation: gradientBG 10s ease infinite;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 
-    /* Main Container */
-    .container {
-        text-align: center;
-        background: white;
-        padding: 40px;
-        border-radius: 20px;
-        box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-        width: 90%;
-        max-width: 500px;
-    }
+/* GRADIENT ANIMATION */
+@keyframes gradientBG {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
 
-    /* Heading */
-    h1 {
-        color: #ff4b2b;
-        margin-bottom: 10px;
-    }
+/* GLASS CONTAINER */
+.container {
+    text-align: center;
+    padding: 40px;
+    border-radius: 25px;
+    width: 90%;
+    max-width: 500px;
+    backdrop-filter: blur(15px);
+    background: rgba(255,255,255,0.2);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.25);
+    color: white;
+    animation: fadeIn 1.5s ease;
+}
 
-    /* Subtext */
-    p {
-        color: #555;
-        margin-bottom: 20px;
-    }
+/* FADE IN */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(30px);}
+    to { opacity: 1; transform: translateY(0);}
+}
 
-    /* Button */
-    .btn {
-        background: #ff4b2b;
-        color: white;
-        border: none;
-        padding: 12px 20px;
-        border-radius: 25px;
-        cursor: pointer;
-        font-size: 16px;
-        transition: 0.3s;
-    }
+/* TITLE */
+h1 {
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+}
 
-    .btn:hover {
-        background: #ff6a4d;
-        transform: scale(1.05);
-    }
+/* SUBTEXT */
+p {
+    opacity: 0.9;
+    margin-bottom: 25px;
+}
 
-    /* Footer */
-    .footer {
-        margin-top: 20px;
-        font-size: 14px;
-        color: #888;
-    }
+/* BUTTON */
+.btn {
+    background: white;
+    color: #ff416c;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 30px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: 0.3s;
+    font-weight: bold;
+}
+
+/* BUTTON HOVER */
+.btn:hover {
+    transform: scale(1.1);
+    box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+}
+
+/* FLOATING PIZZA EMOJI */
+.pizza {
+    position: absolute;
+    font-size: 30px;
+    animation: float 6s infinite ease-in-out;
+}
+
+.pizza:nth-child(1) {
+    top: 10%;
+    left: 20%;
+}
+
+.pizza:nth-child(2) {
+    bottom: 10%;
+    right: 20%;
+}
+
+@keyframes float {
+    0% { transform: translateY(0px);}
+    50% { transform: translateY(-20px);}
+    100% { transform: translateY(0px);}
+}
+
+/* FOOTER */
+.footer {
+    margin-top: 20px;
+    font-size: 14px;
+    opacity: 0.8;
+}
 </style>
 
 </head>
+
 <body>
 
+<!-- FLOATING ELEMENTS -->
+<div class="pizza">🍕</div>
+<div class="pizza">🍕</div>
+
+<!-- MAIN UI -->
 <div class="container">
     <h1>🍕 PizzaMate</h1>
-    <p>Your smart pizza ordering assistant</p>
-    <button class="btn" onclick="alert('Click the chat icon below to start!')">
-        Start Chat
-    </button>
+    <p>Your smart AI pizza ordering assistant</p>
+
+    <button class="btn" onclick="startChat()">Start Ordering</button>
 
     <div class="footer">
         Powered by Watson Assistant
     </div>
 </div>
 
-<!-- Watson Assistant Chatbot Script -->
 <script>
-  window.watsonAssistantChatOptions = {
+function startChat() {
+    alert("Click the chat icon at bottom-right to order your pizza!");
+}
+</script>
+
+<!-- Watson Assistant -->
+<script>
+window.watsonAssistantChatOptions = {
     integrationID: "8296ea67-38a7-4f24-8707-fe0fc5606bc0",
     region: "eu-de",
     serviceInstanceID: "a8558f11-28ef-4113-82bf-ddaf0d66989f",
     onLoad: async (instance) => { await instance.render(); }
-  };
+};
 
-  setTimeout(function(){
+setTimeout(function(){
     const t = document.createElement('script');
     t.src = "https://web-chat.global.assistant.watson.appdomain.cloud/versions/" +
             (window.watsonAssistantChatOptions.clientVersion || 'latest') +
             "/WatsonAssistantChatEntry.js";
     document.head.appendChild(t);
-  });
+});
 </script>
 
 </body>
